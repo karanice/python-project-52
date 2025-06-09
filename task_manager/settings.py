@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'task-manager-0qwl.onrender.com'
+    'task-manager-0qwl.onrender.com',
     'webserver', # на первом шаге проекта об этом сказано
 ]
 
