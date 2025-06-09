@@ -4,6 +4,9 @@ build:
 render-start:
 		gunicorn task_manager.wsgi
 
+make dev:
+		python3 manage.py runserver 
+
 lint:
 		uv run ruff check task_manager 
 
