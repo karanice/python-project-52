@@ -44,8 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'hexlet-code',
+    'task_manager'
 ] # добавить сюда приложения? типа hexlet-code и его модули через точку
+#   или по идее всё-таки должно быть task_manager? иначе рендер падает
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
