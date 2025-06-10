@@ -44,7 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'task_manager'
+    'task_manager',
+    'task_manager.users',
+    'task_manager.labels',
+    'task_manager.statuses',
+    'task_manager.tasks',
 ] # добавить сюда приложения? типа hexlet-code и его модули через точку
 #   или по идее всё-таки должно быть task_manager? иначе рендер падает
 
