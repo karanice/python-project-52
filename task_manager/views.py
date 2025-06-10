@@ -7,12 +7,22 @@ from django.contrib import messages
 
 
 class IndexView(View):
-    template_name = "index.html"
     
     def get(self, request, *args, **kwargs):
         return render(
             request,
             "base.html",
+            context={
+            },
+        )
+    
+class UserIndexView(View):
+    template_name = "index.html"
+    
+    def get(self, request, *args, **kwargs):
+        return render(
+            request,
+            "users/index.html",
             context={
             },
         )
