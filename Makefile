@@ -16,3 +16,9 @@ lint:
 
 fix-lint:
 		uv run ruff check task_manager
+
+migrate:
+		uv run manage.py migrate
+
+create-migration:
+		python manage.py makemigrations
