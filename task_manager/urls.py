@@ -20,5 +20,11 @@ from task_manager import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", views.IndexView.as_view()),
+    path('', views.IndexView.as_view()),
+    path('users/', views.UserIndexView.as_view()),
+    path('users/create/'), # GET, POST страница регистрации нового пользователя
+    path('users/<int:pk>/update/'), # GET, POST страница редактирования пользователя
+    path('users/<int:pk>/delete/'), #GET, POST страница удаления пользователя
+    path('login/'), # GET страница входа, POST аутентификация (вход)
+    path('logout/'), # POST завершение сессии (выход)
 ]
