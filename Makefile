@@ -7,8 +7,11 @@ build:
 render-start:
 		gunicorn task_manager.wsgi
 
-make dev:
+dev:
 		python3 manage.py runserver 
+
+shell:
+		python3 manage.py shell
 
 lint:
 		uv run ruff check task_manager 
@@ -21,4 +24,4 @@ migrate:
 		uv run manage.py migrate
 
 create-migration:
-		python manage.py makemigrations
+		python3 manage.py makemigrations
