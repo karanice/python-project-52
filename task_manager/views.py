@@ -6,7 +6,7 @@ from django.contrib.auth import login, logout, authenticate
 
 
 class IndexView(View):
-    
+
     def get(self, request, *args, **kwargs):
         return render(
             request,
@@ -18,9 +18,11 @@ class IndexView(View):
 class UserLogInFormView(View):
 
     def get(self, request, *args, **kwargs):
+        mssgs = messages.get_messages(request)
         return render(
             request, 
             "registration/login.html",
+            {'messages': mssgs}
         )
 
     def post(self, request, *args, **kwargs):
