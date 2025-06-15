@@ -1,0 +1,28 @@
+{% extends "layouts/layout.html" %}
+
+{% block header %}
+Вход
+{% endblock %}
+      
+{% block content %}
+{% if no_user %}
+  <div>
+    <p>
+    <font color="red">Пожалуйста, введите правильные имя пользователя и пароль. 
+        Оба поля могут быть чувствительны к регистру.</font>
+    </p>
+  </div>
+{% endif %}
+<form method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label class="form-label" for="id_username">Имя пользователя</label>
+    <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" class="form-control" placeholder="Имя пользователя" required id="id_username">
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="id_password">Пароль</label>
+    <input type="password" name="password" autocomplete="current-password" class="form-control" placeholder="Пароль" required id="id_password">
+  </div>
+    <input class="btn btn-primary" type="submit" value="Войти">
+</form>
+{% endblock %}
