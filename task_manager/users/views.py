@@ -29,7 +29,8 @@ class UserFormCreateView(View): # ТУТ НУЖНО УБРАТЬ ЧТЕНИЕ С
         form = UserForm(request.POST)
         if form.is_valid(): # Если данные корректные, то сохраняем данные формы
             form.save()
-            messages.add_message(request, messages.SUCCESS, "Пользователь добавлен")
+            messages.add_message(request, messages.SUCCESS, "Пользователь добавлен", 
+                                 'alert alert-success alert-dismissible fade show')
             mssgs = messages.get_messages(request)
             return redirect(reverse('user_index')) # Редирект на указанный маршрут
         # Если данные некорректные, то возвращаем человека обратно на страницу с заполненной формой
@@ -54,18 +55,28 @@ class UserFormUpdateView(View):
         form = UserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            messages.add_message(request, messages.SUCCESS, "Пользователь обновлён")
+            messages.add_message(request, messages.SUCCESS, "Пользователь обновлён",
+                                 'alert alert-success alert-dismissible fade show')
             return redirect(reverse("user_index"))
 
         return render(
             request, "users/update.html", {"form": form, "user_id": user_id}
         )
     
-# class UserFormDeleteView(View):
-#     def post(self, request, *args, **kwargs):
-#         article_id = kwargs.get("id")
-#         article = User.objects.get(id=article_id)
-#         if article:
-#             article.delete()
-#         messages.add_message(request, messages.SUCCESS, "Статья удалена")
-#         return redirect(reverse("articles_index"))
+class UserFormDeleteView(View):
+    def get(self, request, *args, **kwargs):
+        user_id = kwargs.get("id")
+        user = User.objects.get(id=user_id)
+        mssgs = messages.get_messages(request)
+        return render(
+            request, "users/delete.html", {"user": user, "user_id": user_id}
+        )
+    
+    def post(self, request, *args, **kwargs):
+        user_id = kwargs.get("id")
+        user = User.objects.get(id=user_id)
+        if user:
+            user.delete()
+        messages.add_message(request, messages.SUCCESS, "Пользователь успешно удалён",
+                             'alert alert-success alert-dismissible fade show')
+        return redirect(reverse("user_index"))

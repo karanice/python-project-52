@@ -1,0 +1,14 @@
+{% extends "layouts/layout.html" %}
+
+{% block header %}
+Удаление пользователя
+{% endblock %}
+      
+{% block content %}
+<div class="container wrapper flex-grow-1">    
+<p>Вы уверены, что хотите удалить {{ user.first_name }} {{ user.last_name }}</p>
+<form action="{% url 'user_delete' id=user_id %}" method="post">
+  {% csrf_token %}
+  <input class="btn btn-danger" type="submit" value="Да, удалить">
+</form>
+{% endblock %}
