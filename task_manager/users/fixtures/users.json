@@ -1,0 +1,74 @@
+[
+    {
+        "model": "auth.user", 
+        "id": 1, 
+        "fields": {
+            "password": "pbkdf2_sha256$1000000$TxE7m8iIEMXpN7lmM1b0B0$yE3OoinINHbwoBX4zlWeOA0vu9QKtfuJWAHPVzrvYng=",
+            "last_login": "2025-04-15T19:45:00.141Z",
+            "is_superuser": false,
+            "username": "MartinIden",
+            "first_name": "Martin",
+            "last_name": "Iden",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2025-04-15T19:03:19.051Z",
+            "groups": [],
+            "user_permissions": []
+            }
+        }, 
+    {
+        "model": "auth.user",
+        "id": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$1000000$UHzkwuuW6oR2pDYDUeUs2n$GHz043cRSckaAIwu1DLG2AWbGtRqR5Iyp/aO1IjeMfA=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "Chekhonte",
+            "first_name": "Anton",
+            "last_name": "Chekhov",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2025-04-15T19:51:26.169Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    }, 
+    {
+        "model": "auth.user",
+        "id": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$870000$TUi27SFZhDUuVJXGXZ4q3V$7caekh+6dpQuFxgsibAOogMM23SZol0nxuqJPGbdsCA=",
+            "last_login": "2025-04-15T20:01:57.659Z",
+            "is_superuser": false,
+            "username": "KartoXXXXa",
+            "first_name": "Картошка",
+            "last_name": "Картошкина",
+            "email": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2025-04-15T20:01:20.829Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    }, 
+    {
+        "model": "auth.user",
+        "id": 5,
+        "fields": {
+            "password": "pbkdf2_sha256$870000$vud2sCG6pdGbcwDhcmfmNs$7iO2tcyGbgY6/8rgm7CwB76mKQds6T6CKs0FoVC1ogQ=",
+            "last_login": "2025-04-16T17:05:00.578Z",
+            "is_superuser": true,
+            "username": "maria",
+            "first_name": "",
+            "last_name": "",
+            "email": "mchikhireva@gmail.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2025-04-16T17:04:37.088Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]

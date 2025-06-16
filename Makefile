@@ -18,10 +18,13 @@ lint:
 
 
 fix-lint:
-		uv run ruff check task_manager
+		uv run ruff check --fix task_manager
 
 migrate:
 		uv run manage.py migrate
 
 create-migration:
 		python3 manage.py makemigrations
+
+make test:
+		python3 manage.py test 
