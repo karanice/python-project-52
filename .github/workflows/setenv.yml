@@ -1,0 +1,29 @@
+name: setenv
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Run migrations
+        env:
+          DBNAME: ${{ secrets.DBNAME }}
+          DBUSER: ${{ secrets.DBUSER }}
+          DBPASSWORD: ${{ secrets.DBPASSWORD }}
+          DBHOST: ${{ secrets.DBHOST }}
+          DBPORT: ${{ secrets.DBPORT }}
+        run: |
+          python3 manage.py migrate
