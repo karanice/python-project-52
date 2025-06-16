@@ -17,34 +17,19 @@
         <form method="get" class="p-3 bg-light rounded border shadow-sm mb-3">
             <div class="mb-3">
                 <label for="id_status" class="form-label">Статус</label>
-                <select id="id_status" name="status" class="form-select ml-2 mr-3">
-                    <option value selected>---------</option>
-                    {% for status in filter.form.status.field.queryset %}
-                        <option value="{{ status.id }}">{{ status.name }}</option>
-                    {% endfor %}
-                </select>
+                {{ filter.form.status }}
             </div>
             <div class="mb-3">
                 <label for="id_executor" class="form-label">Исполнитель</label>
-                <select id="id_executor" name="executor" class="form-select ml-2 mr-3">
-                    <option value selected>---------</option>
-                    {% for user in filter.form.executor.field.queryset %}
-                        <option value="{{ user.id }}">{{ user.get_full_name }}</option>
-                    {% endfor %}
-                </select>
+                {{ filter.form.executor }}
             </div>
             <div class="mb-3">
               <label for="id_labels" class="form-label">Метка</label>
-                <select id="id_labels" name="labels" class="form-select ml-2 mr-3">
-                    <option value selected>---------</option>
-                    {% for label in filter.form.labels.field.queryset %}
-                        <option value="{{ label.id }}">{{ label.name }}</option>
-                    {% endfor %}
-                </select>
+                {{ filter.form.labels }}
             </div>
              <div class="form-check mb-3">
-                <input type="checkbox" id="id_user_tasks" name="user_tasks" class="form-check-input">
-                <label for="id_user_tasks" class="form-check-label">Только свои задачи</label>
+              {{ filter.form.user_tasks }}
+              <label for="id_user_tasks" class="form-check-label">Только свои задачи</label>
             </div>
             <button type="submit" class="btn btn-primary">Показать</button>
           </form>
