@@ -10,7 +10,8 @@ Following entities are developed:
 * Users
 * Tasks
 * Statuses
-* Labels \
+* Labels
+
 Users can create tasks, assign performers, statuses and labels.
 
 ### Stack
