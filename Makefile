@@ -28,3 +28,6 @@ create-migration:
 
 make test:
 		python3 manage.py test 
+
+make collectstatic:
+		python3 manage.py collectstatic --noinput 
