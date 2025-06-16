@@ -23,9 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.IndexView.as_view(), name='main'),
     path('login/', views.UserLogInFormView.as_view(), name='login'),
-    path('logout/', views.UserLogOutFormView.as_view(), name='logout'),  # POST
+    path('logout/', views.UserLogOutFormView.as_view(), name='logout'),
     path("users/", include("task_manager.users.urls")),
-    # path("tasks/", include("task_manager.tasks.urls")), # вот эти три возможно и не понадобятся
-    # path("statuses/", include("task_manager.statuses.urls")),
-    # path("labels/", include("task_manager.labels.urls")),
+    path("tasks/", include("task_manager.tasks.urls")),
+    path("statuses/", include("task_manager.statuses.urls")),
+    path("labels/", include("task_manager.labels.urls")),
 ]
