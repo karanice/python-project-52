@@ -16,7 +16,7 @@
     <div class="card-body bg-light mb-3"></div>
         <form method="get" class="p-3 bg-light rounded border shadow-sm mb-3">
             <div class="mb-3">
-                <label for="id_status" class="form-label">Cтатус</label>
+                <label for="id_status" class="form-label">Статус</label>
                 <select id="id_status" name="status" class="form-select ml-2 mr-3">
                     <option value selected>---------</option>
                     {% for status in filter.form.status.field.queryset %}
