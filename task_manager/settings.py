@@ -14,6 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 import rollbar
+import sys
 
 load_dotenv()
 
@@ -35,13 +36,16 @@ ALLOWED_HOSTS = [
     'webserver', # на первом шаге проекта об этом сказано
 ]
 
-ROLLBAR = {
-    'access_token': os.getenv('ROLLBAR_TOKEN'),
-    'environment': os.getenv('ENV'),
-    'root': os.path.dirname(os.path.abspath(__file__)),
-}
+TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 
-rollbar.init(**ROLLBAR)
+if not TESTING:
+    ROLLBAR = {
+        'access_token': os.getenv('ROLLBAR_TOKEN'),
+        'environment': os.getenv('ENV'),
+        'root': os.path.dirname(os.path.abspath(__file__)),
+    }
+
+    rollbar.init(**ROLLBAR)
 
 
 # Application definition
