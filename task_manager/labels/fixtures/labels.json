@@ -1,6 +1,6 @@
 [
 {
-    "model": "labels.label",
+    "model": "labels.Label",
     "pk": 1,
     "fields": {
         "name": "FinTech",

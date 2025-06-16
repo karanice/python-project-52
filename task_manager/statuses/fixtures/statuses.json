@@ -1,6 +1,6 @@
 [
 {
-    "model": "statuses.status",
+    "model": "statuses.Status",
     "id": 1,
     "fields": {
         "name": "in progress",
@@ -8,7 +8,7 @@
     }
 },
 {
-    "model": "statuses.status",
+    "model": "statuses.Status",
     "id": 2,
     "fields": {
         "name": "finished",
