@@ -23,17 +23,24 @@ jobs:
       - name: Install dependencies
         run: make install
 
-      - name: Run migrations (test DB)
+      - name: Debug environment
+        run: |
+          printenv
+          python -c "import os; print('DATABASE_URL:', os.getenv('DATABASE_URL'))"
+
+      - name: Run migrations
         env:
           DATABASE_URL: sqlite:///test.db
         run: |
-          make migrate
           python manage.py check --database default
+          python manage.py migrate --noinput
 
       - name: Run tests
         env:
           DATABASE_URL: sqlite:///test.db
-        run: make test
+        run: |
+          python manage.py check --database default
+          make test
 
       - name: Lint code
         run: make lint

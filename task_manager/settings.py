@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 import os
 import rollbar
 import sys
+import dj_database_url
 
 load_dotenv()
 
@@ -98,14 +99,7 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-if os.getenv('ENV') == 'development':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
+if os.getenv('ENV') == 'production':
     DATABASES = {
         'default': {  
             'ENGINE': 'django.db.backends.postgresql',  
@@ -116,6 +110,16 @@ else:
             'PORT': os.getenv("DBPORT"),  
         }  
     }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.parse(os.environ['DATABASE_URL'])
 
 
 # Password validation
