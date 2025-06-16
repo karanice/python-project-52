@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.shortcuts import render, get_object_or_404
-from django.views import View
 from django.contrib import messages
-from django.contrib.auth.models import User
-from task_manager.users.forms import UserForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.views import View
+
+from task_manager.users.forms import UserForm
 
 
 class CustomLoginRequiredMixin(LoginRequiredMixin):  
@@ -17,19 +17,20 @@ class CustomLoginRequiredMixin(LoginRequiredMixin):
         return super().dispatch(request, *args, **kwargs)  
     
 
-class UserIndexView(View): # ДОБАВИТЬ ВЫВОД ОШИБОК
+class UserIndexView(View):  # ДОБАВИТЬ ВЫВОД ОШИБОК
     def get(self, request, *args, **kwargs):
         users = User.objects.all()
         mssgs = messages.get_messages(request)
         return render(
             request,
             "users/index.html",
-            context={ 'users': users,
+            context={'users': users,
                       'messages': mssgs,
             },
         )
 
-class UserFormCreateView(View): # ТУТ НУЖНО УБРАТЬ ЧТЕНИЕ СООБЩЕНИЙ
+
+class UserFormCreateView(View):  # ТУТ НУЖНО УБРАТЬ ЧТЕНИЕ СООБЩЕНИЙ
     def get(self, request, *args, **kwargs):
         form = UserForm()
         mssgs = messages.get_messages(request)
@@ -43,10 +44,9 @@ class UserFormCreateView(View): # ТУТ НУЖНО УБРАТЬ ЧТЕНИЕ С
                                  'alert alert-success alert-dismissible fade show')
             mssgs = messages.get_messages(request)
             return redirect(reverse('user_index'))
-        mssgs = messages.get_messages(request)
-        messages.add_message(request, messages.WARNING, "Проверьте заполняемые поля")
-        return render(request, 'users/create.html', {'form': form, 'messages': mssgs})
+        return render(request, 'users/create.html', {'form': form})
     
+
 class UserFormUpdateView(CustomLoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         user_id = kwargs.get("id")
@@ -75,7 +75,7 @@ class UserFormUpdateView(CustomLoginRequiredMixin, View):
         form = UserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            messages.add_message(request, messages.SUCCESS, "Пользователь обновлён",
+            messages.add_message(request, messages.SUCCESS, "Пользователь успешно изменен",
                                  'alert alert-success alert-dismissible fade show')
             return redirect(reverse("user_index"))
 
@@ -83,6 +83,7 @@ class UserFormUpdateView(CustomLoginRequiredMixin, View):
             request, "users/update.html", {"form": form, "user_id": user_id}
         )
     
+
 class UserFormDeleteView(CustomLoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         user_id = kwargs.get("id")
@@ -108,6 +109,6 @@ class UserFormDeleteView(CustomLoginRequiredMixin, View):
         
         if user:
             user.delete()
-        messages.add_message(request, messages.SUCCESS, "Пользователь успешно удалён",
+        messages.add_message(request, messages.SUCCESS, "Пользователь успешно удален",
                              'alert alert-success alert-dismissible fade show')
         return redirect(reverse("user_index"))

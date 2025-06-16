@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
+
 class UserForm(forms.ModelForm):
     password = forms.CharField(
         label=("Пароль"),
@@ -36,17 +37,36 @@ class UserForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+        username = cleaned_data.get("username")
         password = cleaned_data.get("password")
         confirm_password = cleaned_data.get("confirm_password")
 
-        if password != confirm_password:
-            raise forms.ValidationError("Пароли не совпадают.")
+        errors = []
 
+        if self.instance.id:
+            if User.objects.filter(username=username).exclude(id=self.instance.id).exists():
+                self.add_error('username', 'Пользователь с таким именем уже существует.')
+        else:
+            if User.objects.filter(username=username).exists():
+                self.add_error('username', 'Пользователь с таким именем уже существует.')
+
+        if password and len(password) < 3:
+            errors.append('Введённый пароль слишком короткий. Он должен содержать как минимум 3 символа.')
+
+        if password != confirm_password:
+            errors.append('Пароли не совпадают.')
+
+        if errors:
+            msg = " ".join(errors)
+            self.fields['confirm_password'].help_text = f"{msg}Для подтверждения введите, пожалуйста, пароль ещё раз."
+            for error in errors:
+                self.add_error('confirm_password', error)
+        
         return cleaned_data
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password"])  # Хэширование пароля
+        user.set_password(self.cleaned_data["password"])
         if commit:
             user.save()
         return user
