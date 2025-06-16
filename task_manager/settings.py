@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+import rollbar
 
 load_dotenv()
 
@@ -33,6 +34,14 @@ ALLOWED_HOSTS = [
     'task-manager-0qwl.onrender.com',
     'webserver', # на первом шаге проекта об этом сказано
 ]
+
+ROLLBAR = {
+    'access_token': os.getenv('ROLLBAR_TOKEN'),
+    'environment': os.getenv('ENV'),
+    'root': os.path.dirname(os.path.abspath(__file__)),
+}
+
+rollbar.init(**ROLLBAR)
 
 
 # Application definition
@@ -59,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
 ]
 
 ROOT_URLCONF = 'task_manager.urls'
@@ -84,12 +94,24 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if os.getenv('ENV') == 'development':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {  
+            'ENGINE': 'django.db.backends.postgresql',  
+            'NAME': os.getenv("DBNAME"),  
+            'USER': os.getenv("DBUSER"),  
+            'PASSWORD': os.getenv("DBPASSWORD"),  
+            'HOST': os.getenv("DBHOST"),  
+            'PORT': os.getenv("DBPORT"),  
+        }  
+    }
 
 
 # Password validation
