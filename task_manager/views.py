@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
-from django.contrib import messages
-from django.contrib.auth import login, logout, authenticate
 
 
 class IndexView(View):
@@ -15,6 +15,7 @@ class IndexView(View):
             },
         )
     
+
 class UserLogInFormView(View):
 
     def get(self, request, *args, **kwargs):
@@ -36,6 +37,7 @@ class UserLogInFormView(View):
             return redirect(reverse("main"))
         else:
             return render(request, "registration/login.html", {"no_user": True})
+
 
 class UserLogOutFormView(View):
     def post(self, request, *args, **kwargs):
