@@ -45,7 +45,7 @@ class UserFormCreateView(View):
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.SUCCESS, 
-                                 "Пользователь добавлен", 
+                                 "Пользователь успешно зарегистрирован", 
                                  'alert alert-success ' 
                                  'alert-dismissible fade show')
             return redirect(reverse('login'))
