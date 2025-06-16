@@ -15,7 +15,7 @@ class Task(models.Model):
                                  on_delete=models.PROTECT, 
                                  null=True, blank=True, 
                                  related_name='tasks_assigned')
-    labels = models.ManyToManyField('labels.Label', null=True, blank=True)
+    labels = models.ManyToManyField('labels.Label', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):

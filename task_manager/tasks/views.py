@@ -58,17 +58,18 @@ class TaskDeleteFormView(LoginRequiredMixin, DeleteView):
     template_name = 'tasks/delete.html'
     context_object_name = 'task'
     success_url = reverse_lazy('task_index')
-
-    def dispatch(self, request, *args, **kwargs):
+        
+    def post(self, request, *args, **kwargs):
         task = self.get_object()
-        if task.author != request.user:
+        if task.author != request.user and not request.user.is_superuser:
             messages.error(request, 
                            ('Задачу может удалить только ее автор'),
                            'alert alert-danger alert-dismissible fade show')
             return redirect('task_index')
+        task.delete()
         messages.success(self.request, ('Задача успешно удалена'),
                          'alert alert-success alert-dismissible fade show')
-        return super().dispatch(request, *args, **kwargs)
+        return redirect('task_index')
 
     def get_object(self, queryset=None):
         return get_object_or_404(Task, pk=self.kwargs['pk'])

@@ -108,6 +108,10 @@ class UserFormDeleteView(CustomLoginRequiredMixin, View):
             return redirect(reverse('user_index'))
         
         if user:
+            if user.tasks_created.exists():
+                messages.error(self.request, ('''Невозможно удалить пользователя, 
+                                              потому что он используется'''),
+                                            'alert alert-danger alert-dismissible fade show')
             user.delete()
         messages.add_message(request, messages.SUCCESS, "Пользователь успешно удален",
                              'alert alert-success alert-dismissible fade show')
