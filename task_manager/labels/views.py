@@ -33,7 +33,7 @@ class LabelCreateFormView(LoginRequiredMixin, CreateView):
 class LabelUpdateFormView(LoginRequiredMixin, UpdateView):
     model = Label
     form_class = LabelForm
-    template_name = 'labels/create.html'
+    template_name = 'labels/update.html'
     success_url = reverse_lazy('label_index')
 
     def get_context_data(self, **kwargs):

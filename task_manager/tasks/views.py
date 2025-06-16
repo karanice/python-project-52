@@ -39,7 +39,7 @@ class TaskCreateFormView(LoginRequiredMixin, CreateView):
 class TaskUpdateFormView(LoginRequiredMixin, UpdateView):
     model = Task
     form_class = TaskForm
-    template_name = 'tasks/create.html'
+    template_name = 'tasks/update.html'
     success_url = reverse_lazy('task_index')
 
     def get_context_data(self, **kwargs):
