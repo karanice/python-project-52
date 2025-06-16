@@ -29,5 +29,9 @@ create-migration:
 test:
 		python3 manage.py test 
 
+test-cov:
+		uv run coverage run manage.py test
+		uv run coverage report
+
 collectstatic:
 		python3 manage.py collectstatic --noinput 
