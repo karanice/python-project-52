@@ -33,7 +33,8 @@ class UserLogInFormView(View):
         if user is not None:
             login(request, user)
             messages.add_message(request, messages.SUCCESS, "Вы залогинены", 
-                                 'alert alert-success alert-dismissible fade show')
+                                 'alert alert-success ' 
+                                 'alert-dismissible fade show')
             return redirect(reverse("main"))
         else:
             return render(request, "registration/login.html", {"no_user": True})

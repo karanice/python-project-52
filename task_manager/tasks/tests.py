@@ -35,8 +35,8 @@ class TaskTest(TestCase):
         task = Task.objects.first()
         response = self.client.post(reverse('task_update', 
                                             kwargs={'pk': task.pk}), {
-                                                'name': 'Updated Task',
-                                                'description': 'Updated Description',
+                                                'name': 'Upd Task',
+                                                'description': 'Upd Desc',
                                                 'status': self.status.pk,
                                                 'executor': self.user.pk,
                                                 'labels': [self.label.pk],
@@ -44,8 +44,8 @@ class TaskTest(TestCase):
 
         self.assertEqual(response.status_code, 302)
         task.refresh_from_db()
-        self.assertEqual(task.name, 'Updated Task')
-        self.assertEqual(task.description, 'Updated Description')
+        self.assertEqual(task.name, 'Upd Task')
+        self.assertEqual(task.description, 'Upd Desc')
 
     def test_delete_task(self):
         task = Task.objects.first()

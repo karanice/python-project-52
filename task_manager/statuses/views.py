@@ -57,7 +57,8 @@ class StatusDeleteFormView(LoginRequiredMixin, DeleteView):
         status = self.get_object()
         if status.task_set.exists():
             messages.error(self.request, 
-                           ('Невозможно удалить статус, потому что он используется'),
+                           ('''Невозможно удалить статус, 
+                           потому что он используется'''),
                            'alert alert-danger alert-dismissible fade show')
             return redirect(self.success_url)
         messages.success(self.request, ('Статус успешно удален'),

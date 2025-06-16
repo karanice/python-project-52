@@ -24,14 +24,15 @@ class UserTest(TestCase):
         self.assertTrue(User.objects.filter(username='iivan').exists())
 
     def test_update_user(self):
-        response = self.client.post(reverse('user_update', 
-                                            kwargs={'id': self.user.id}),
-                                            {'first_name': 'Semyon',
-                                             'last_name': self.user.last_name,
-                                             'username': self.user.username,
-                                             'password': self.user.password,
-                                             'confirm_password': self.user.password
-                                            })
+        response = self.client.post(reverse(
+            'user_update', 
+            kwargs={'id': self.user.id}),
+            {'first_name': 'Semyon',
+                'last_name': self.user.last_name,
+                'username': self.user.username,
+                'password': self.user.password,
+                'confirm_password': self.user.password
+            })
         self.user.refresh_from_db()
         self.assertEqual(response.status_code, 302)
         self.assertEqual(self.user.first_name, "Semyon")
@@ -47,7 +48,6 @@ class UserTest(TestCase):
                                             })
         self.user.refresh_from_db()
         self.assertEqual(response.status_code, 200)
-        # проверку на тело? пароли не совпадают в html...
 
     def test_delete_user(self):
         response = self.client.post(reverse("user_delete", 
