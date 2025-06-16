@@ -48,7 +48,7 @@ class UserFormCreateView(View):
                                  "Пользователь добавлен", 
                                  'alert alert-success ' 
                                  'alert-dismissible fade show')
-            return redirect(reverse('user_index'))
+            return redirect(reverse('login'))
         return render(request, 'users/create.html', {'form': form})
     
 
