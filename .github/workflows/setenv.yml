@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - name: Install UV
         run: pip install uv
@@ -36,11 +36,16 @@ jobs:
       - name: Run migrations (SQLite for CI)
         env:
           DATABASE_URL: "sqlite:///test.db"
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
           source .venv/bin/activate
           make migrate
 
       - name: Run tests
+        env:
+          DATABASE_URL: "sqlite:///test.db"
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DEBUG: "False"
         run: |
           source .venv/bin/activate
           make test
@@ -49,8 +54,3 @@ jobs:
         run: |
           source .venv/bin/activate
           make lint
-
-      - name: Collect static files (optional)
-        run: |
-          source .venv/bin/activate
-          make collectstatic
