@@ -117,22 +117,23 @@ class UserFormDeleteView(CustomLoginRequiredMixin, View):
         user_id = kwargs.get("id")
         user = User.objects.get(id=user_id)
         
-        if request.user != user:
+        if request.user != user and not request.user.is_superuser:
             messages.add_message(request, messages.WARNING, 
                                  "У вас нет прав для изменения " 
                                  "другого пользователя.", 
                                  'alert alert-danger ' 
                                  'alert-dismissible fade show')
             return redirect(reverse('user_index'))
-        
-        if user:
-            if user.tasks_created.exists():
-                messages.error(self.request, 
-                               ('''Невозможно удалить пользователя, 
-                                потому что он используется'''),
-                                'alert alert-danger ' 
-                                'alert-dismissible fade show')
-            user.delete()
+
+        if user.tasks_created.exists():
+            messages.add_message(self.request, messages.ERROR,
+                            ('''Невозможно удалить пользователя, 
+                            потому что он используется'''),
+                            'alert alert-danger ' 
+                            'alert-dismissible fade show')
+            return redirect(reverse("user_index"))
+    
+        user.delete()
         messages.add_message(request, messages.SUCCESS, 
                              "Пользователь успешно удален",
                              'alert alert-success ' 
