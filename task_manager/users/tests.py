@@ -17,8 +17,8 @@ class UserTest(TestCase):
             'first_name': 'Ivan',
             'last_name': 'Ivanov',
             'username': 'iivan',
-            'password': 'mypass',
-            'confirm_password': 'mypass',
+            'password1': 'mypass',
+            'password2': 'mypass',
         })
         self.assertEqual(response.status_code, 302)
         self.assertTrue(User.objects.filter(username='iivan').exists())
@@ -30,8 +30,8 @@ class UserTest(TestCase):
             {'first_name': 'Semyon',
                 'last_name': self.user.last_name,
                 'username': self.user.username,
-                'password': self.user.password,
-                'confirm_password': self.user.password
+                'password1': self.user.password,
+                'password2': self.user.password
             })
         self.user.refresh_from_db()
         self.assertEqual(response.status_code, 302)
@@ -43,8 +43,8 @@ class UserTest(TestCase):
                                             {'first_name': 'Eddy',
                                              'last_name': self.user.last_name,
                                              'username': self.user.username,
-                                             'password': self.user.password,
-                                             'confirm_password': 'wrongpass'
+                                             'password1': self.user.password,
+                                             'password2': 'wrongpass'
                                             })
         self.user.refresh_from_db()
         self.assertEqual(response.status_code, 200)

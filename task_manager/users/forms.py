@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class UserForm(forms.ModelForm):
-    password = forms.CharField(
+    password1 = forms.CharField(
         label=("Пароль"),
         widget=forms.PasswordInput(
             attrs={'placeholder': 'Пароль',
@@ -11,7 +11,7 @@ class UserForm(forms.ModelForm):
         help_text=("Ваш пароль должен содержать как минимум 3 символа."),
     )
 
-    confirm_password = forms.CharField(
+    password2 = forms.CharField(
         label=("Подтверждение пароля"),
         widget=forms.PasswordInput(
             attrs={'placeholder': 'Подтверждение пароля', 
@@ -22,7 +22,7 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username', 
-                  'password', 'confirm_password')
+                  'password1', 'password2')
         labels = {
             'first_name': 'Имя',
             'last_name': 'Фамилия',
@@ -47,8 +47,8 @@ class UserForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         username = cleaned_data.get("username")
-        password = cleaned_data.get("password")
-        confirm_password = cleaned_data.get("confirm_password")
+        password1 = cleaned_data.get("password1")
+        password2 = cleaned_data.get("password2")
 
         errors = []
 
@@ -62,25 +62,25 @@ class UserForm(forms.ModelForm):
                 self.add_error('username', 
                                'Пользователь с таким именем уже существует.')
 
-        if password and len(password) < 3:
+        if password1 and len(password1) < 3:
             errors.append('Введённый пароль слишком короткий. ' 
             'Он должен содержать как минимум 3 символа.')
 
-        if password != confirm_password:
+        if password1 != password2:
             errors.append('Пароли не совпадают.')
 
         if errors:
             msg = " ".join(errors)
-            self.fields['confirm_password'].help_text = \
+            self.fields['password2'].help_text = \
             f"{msg}Для подтверждения введите, пожалуйста, пароль ещё раз."
             for error in errors:
-                self.add_error('confirm_password', error)
+                self.add_error('password2', error)
         
         return cleaned_data
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password"])
+        user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
         return user
