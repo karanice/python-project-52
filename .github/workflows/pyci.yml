@@ -1,5 +1,5 @@
 
-name: setenv
+name: pyci
 on:
   push:
     branches: [main]
